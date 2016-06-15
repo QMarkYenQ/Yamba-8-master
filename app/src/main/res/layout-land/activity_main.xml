@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
+    <!--   TimelineFragment   -->
     <fragment
         android:id="@+id/fragment_timeline"
         android:name="com.marakana.android.yamba.TimelineFragment"
@@ -11,7 +12,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         tools:layout="@android:layout/list_content" />
-
+    <!--   DetailsFragment   -->
     <fragment
         android:id="@+id/fragment_details"
         android:name="com.marakana.android.yamba.DetailsFragment"
