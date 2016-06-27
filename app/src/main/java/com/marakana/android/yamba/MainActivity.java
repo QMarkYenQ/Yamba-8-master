@@ -1,6 +1,5 @@
 package com.marakana.android.yamba;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -29,18 +28,27 @@ public class MainActivity extends AppCompatActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			startActivity(new Intent(this, SettingsActivity.class));
+			startActivity(
+				new Intent(this, SettingsActivity.class)
+			);
 			return true;
 		case R.id.action_tweet:
-			startActivity(new Intent("com.marakana.android.yamba.action.tweet"));
+			startActivity(
+				new Intent("com.marakana.android.yamba.action.tweet")
+			);
 			return true;
 		case R.id.action_refresh:
-			startService(new Intent(this, RefreshService.class));
+			startService(
+				new Intent(this, RefreshService.class)
+			);
 			return true;
-			case R.id.action_purge:
-				int rows = getContentResolver().delete(StatusContract.CONTENT_URI, null, null);
-				Toast.makeText(this, "Deleted "+rows+" rows", Toast.LENGTH_LONG).show();
-				return true;
+		case R.id.action_purge:
+			int rows =
+				getContentResolver().delete(
+					StatusContract.CONTENT_URI, null, null
+			     );
+			Toast.makeText(this, "Deleted "+rows+" rows", Toast.LENGTH_LONG).show();
+			return true;
 		default:
 			return false;
 		}

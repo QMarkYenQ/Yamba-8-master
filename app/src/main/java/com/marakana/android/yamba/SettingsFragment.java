@@ -7,12 +7,13 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
-public class SettingsFragment extends PreferenceFragment implements
-		OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragment implements OnSharedPreferenceChangeListener {
+
 	private SharedPreferences prefs;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
 	}
@@ -31,8 +32,7 @@ public class SettingsFragment extends PreferenceFragment implements
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 		getActivity().sendBroadcast( new Intent("com.marakana.android.yamba.action.UPDATED_INTERVAL") );
 	}
 }

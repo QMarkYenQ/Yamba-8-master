@@ -2,7 +2,7 @@
 <resources>
 
     <string-array name="interval_names">
-        <item>Fiftheen minutes</item>
+        <item>One minutes</item>
         <item>Half an hour</item>
         <item>An hour</item>
         <item>Half a day</item>
@@ -11,7 +11,7 @@
     </string-array>
     
     <string-array name="interval_values">
-        <item>900000</item>
+        <item>40000</item>
         <item>1800000</item>
         <item>3600000</item>
         <item>43200000</item>

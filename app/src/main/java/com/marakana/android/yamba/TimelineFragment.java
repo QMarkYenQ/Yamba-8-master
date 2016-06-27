@@ -16,24 +16,33 @@ import android.widget.SimpleCursorAdapter.ViewBinder;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class TimelineFragment extends ListFragment implements
-		LoaderCallbacks<Cursor> {
+public class TimelineFragment extends ListFragment // 保含 ListView 的 Fragment
+		implements LoaderCallbacks<Cursor>
+{
 	private static final String TAG = TimelineFragment.class.getSimpleName();
-	private static final String[] FROM = { StatusContract.Column.USER,
-			StatusContract.Column.MESSAGE, StatusContract.Column.CREATED_AT,
-			StatusContract.Column.CREATED_AT };
-	private static final int[] TO = { R.id.list_item_text_user,
-			R.id.list_item_text_message, R.id.list_item_text_created_at,
-			R.id.list_item_freshness };
+
+	private static final String[] FROM =
+	{
+		StatusContract.Column.USER,
+		StatusContract.Column.MESSAGE,
+		StatusContract.Column.CREATED_AT,
+		StatusContract.Column.CREATED_AT
+	};
+	private static final int[] TO =
+	{
+		R.id.list_item_text_user,
+		R.id.list_item_text_message,
+		R.id.list_item_text_created_at,
+		R.id.list_item_freshness
+	};
 	private static final int LOADER_ID = 42;
 	private SimpleCursorAdapter mAdapter;
 
-	private static final ViewBinder VIEW_BINDER = new ViewBinder() {
-
+	private static final ViewBinder VIEW_BINDER =
+	new ViewBinder() {
 		@Override
 		public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
 			long timestamp;
-			
 			// Custom binding
 			switch (view.getId()) {
 			case R.id.list_item_text_created_at:
@@ -98,7 +107,7 @@ public class TimelineFragment extends ListFragment implements
 	public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 		// Get the details fragment
 		DetailsFragment fragment = (DetailsFragment) getFragmentManager()
-				.findFragmentById(R.id.fragment_details);
+			.findFragmentById(R.id.fragment_details);
 
 		// Is details fragment visible?
 		if (fragment != null && fragment.isVisible() && cursor.getCount() == 0) {

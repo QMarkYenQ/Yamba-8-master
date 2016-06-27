@@ -10,13 +10,17 @@ public class StatusActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		// Check if this activity was created before
-		if (savedInstanceState == null) {
+		if (savedInstanceState == null)
+		{
 			// Create a fragment
-			StatusFragment fragment = new StatusFragment();
-			getFragmentManager()
-					.beginTransaction()
-					.add(android.R.id.content, fragment,
-							fragment.getClass().getSimpleName()).commit();
+			// StatusFragment();
+			StatusFragment fragment
+				= new StatusFragment();
+			getFragmentManager().beginTransaction().add(
+				 android.R.id.content,
+				 fragment,
+				 fragment.getClass().getSimpleName()
+			).commit();
 		}
 	}
 

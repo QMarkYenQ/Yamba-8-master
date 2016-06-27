@@ -1,72 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.marakana.android.yamba">
-    <uses-permission android:name="android.permission.INTERNET" />
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.marakana.android.yamba"
+    >
+    <!--   uses-permission   -->
+
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <!--   RTL  -->
 
+        <!--   MainActivity   -->
         <activity
-            android:name="com.marakana.android.yamba.StatusActivity"
-            android:label="@string/status_update" >
-            <intent-filter>
-                <action android:name="com.marakana.android.yamba.action.tweet" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
-        <activity android:name="com.marakana.android.yamba.MainActivity" >
+            android:name="com.marakana.android.yamba.MainActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <!--   MAIN    -->
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!--   StatusActivity   -->
+        <activity
+            android:name="com.marakana.android.yamba.StatusActivity"
+            android:label="@string/status_update" >
+            <!--「activity」標籤中的「android:label」屬性可用來指定應用程式將顯示在 Activity 畫面上方的名稱 -->
+            <intent-filter>
+                <action android:name="com.marakana.android.yamba.action.tweet" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        <!-- 定义的 activity接受 implicit intent，
+                 intent filer 要加上 android.intent.category.DEFAULT 这个 category  -->
+        </activity>
 
+
+
+        <!--   SettingsActivity   -->
         <activity
             android:name="com.marakana.android.yamba.SettingsActivity"
             android:label="@string/action_settings" >
         </activity>
+
+        <!--   DetailsActivity   -->
         <activity
             android:name="com.marakana.android.yamba.DetailsActivity" >
         </activity>
 
-        <service android:name="com.marakana.android.yamba.RefreshService" >
+        <!--   RefreshService   -->
+        <service
+            android:name="com.marakana.android.yamba.RefreshService" >
         </service>
 
+        <!--   StatusProvider   -->
         <provider
             android:name="com.marakana.android.yamba.StatusProvider"
             android:authorities="com.marakana.android.yamba.StatusProvider"
-            android:exported="false" />
+            android:exported="false"
+         />
 
+        <!--   BootReceiver   -->
         <receiver android:name="com.marakana.android.yamba.BootReceiver" >
+            <!--   BOOT_COMPLETED   -->
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
+            <!--   UPDATED_INTERVAL   -->
             <intent-filter>
                 <action android:name="com.marakana.android.yamba.action.UPDATED_INTERVAL" />
             </intent-filter>
         </receiver>
+
+        <!--   NotificationReceiver   -->
         <receiver
             android:name="com.marakana.android.yamba.NotificationReceiver"
-            android:exported="false" >
+            android:exported="false"> <!--   是否支持其它应用调用当前组件   -->
+            <!--   NEW_STATUSES   -->
             <intent-filter>
                 <action android:name="com.marakana.android.yamba.action.NEW_STATUSES" />
             </intent-filter>
         </receiver>
+
+        <!--   YambaWidget   -->
         <receiver
             android:name="com.marakana.android.yamba.YambaWidget"
             android:exported="false"  >
+            <!--   NEW_STATUSES   -->
             <intent-filter>
                 <action android:name="com.marakana.android.yamba.action.NEW_STATUSES" />
             </intent-filter>
+            <!--   APPWIDGET_UPDATE   -->
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

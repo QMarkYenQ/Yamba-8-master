@@ -19,62 +19,79 @@ import com.marakana.android.yamba.clientlib.YambaClientException;
 public class RefreshService extends IntentService {
 	private static final String TAG = RefreshService.class.getSimpleName();
 
-	public RefreshService() {
+	public RefreshService()
+	{
 		super(TAG);
 	}
 
 	@Override
-	public void onCreate() {
+	public void onCreate()
+	{
 		super.onCreate();
 		Log.d(TAG, "onCreated");
 	}
 
 	// Executes on a worker thread
 	@Override
-	protected void onHandleIntent(Intent intent) {
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		String username = prefs.getString("username", "student");
-		String password = prefs.getString("password", "password");
+	protected void onHandleIntent(Intent intent)
+	{
+		SharedPreferences prefs
+				= PreferenceManager.getDefaultSharedPreferences(this);
+
+		String username = prefs.getString( "username", "" );
+		String password = prefs.getString( "password", "" );
 
 		// Check that username and password are not empty
-		if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+		if ( TextUtils.isEmpty( username ) || TextUtils.isEmpty( password ) )
+		{
 			Toast.makeText(this, "Please update your username and password",
 					Toast.LENGTH_LONG).show();
 			return;
 		}
 		Log.d(TAG, "onStarted");
+		//  class ContentValues
 		ContentValues values = new ContentValues();
+		// class YambaClient
+		YambaClient cloud = new YambaClient( username, password, "http://yamba.newcircle.com/api" );
 
-		YambaClient cloud = new YambaClient(username, password,"http://yamba.newcircle.com/api");
 		try {
 			int count = 0;
+			//  class YambaClient - getTimeline()
 			List<Status> timeline = cloud.getTimeline(20);
-			for (Status status : timeline) {
+
+			for (Status status : timeline)
+			{
+				//  class ContentValues -put()
 				values.clear();
-				values.put(StatusContract.Column.ID, status.getId());
+				values.put(
+					StatusContract.Column.ID,
+					status.getId()
+				);
 				values.put(StatusContract.Column.USER, status.getUser());
 				values.put(StatusContract.Column.MESSAGE, status.getMessage());
-				values.put(StatusContract.Column.CREATED_AT, status
-						.getCreatedAt().getTime());
+				values.put(StatusContract.Column.CREATED_AT, status.getCreatedAt().getTime());
 
-				Uri uri = getContentResolver().insert(
-						StatusContract.CONTENT_URI, values);
-				if (uri != null) {
+				//  class StatusProvider
+				Uri uri = getContentResolver().insert( StatusContract.CONTENT_URI, values);
+
+				if (uri != null)
+				{
 					count++;
-					Log.d(TAG,
-							String.format("%s: %s", status.getUser(),
-									status.getMessage()));
+					Log.d( TAG, String.format( "%s: %s", status.getUser(), status.getMessage() ) );
 				}
 			}
 
-			if (count > 0) {
-				sendBroadcast(new Intent(
-						"com.marakana.android.yamba.action.NEW_STATUSES").putExtra(
-						"count", count));
+			if ( count > 0 )
+			{
+				// class NotificationReceiver
+				sendBroadcast(
+					new Intent("com.marakana.android.yamba.action.NEW_STATUSES")
+						.putExtra("count",count));
 			}
 
-		} catch (YambaClientException e) {
-			Log.e(TAG, "Failed to fetch the timeline", e);
+		} catch ( YambaClientException e ) {
+
+			Log.e( TAG, "Failed to fetch the timeline", e );
 			e.printStackTrace();
 		}
 
